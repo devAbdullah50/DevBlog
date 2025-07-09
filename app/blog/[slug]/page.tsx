@@ -8,12 +8,14 @@ import { unified } from 'unified'
 const slug = (await import("remark-slug")).default;
 import { visit } from "unist-util-visit";
 import slugify from "slugify";
+import { Metadata } from 'next'
 
 type Props = {
   params: {
     slug: string;
   };
 };
+
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -52,7 +54,6 @@ export default async function BlogPostPage({ params }: Props) {
     .process(content); // ✅ just the string
 
   const contentHTML = String(file);
-
   return (
     <section className="min-h-screen px-6 py-20 bg-gradient-to-r from-gray-900 to-black text-white">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-10">
@@ -89,4 +90,13 @@ export default async function BlogPostPage({ params }: Props) {
       </div>
     </section>
   );
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { meta } = getPostBySlug(params.slug);
+
+  return {
+    title: `${meta.title} | DevBlog`,
+    description: meta.description || "Blog page of the DevBlog website",
+  };
 }
