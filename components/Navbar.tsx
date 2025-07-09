@@ -10,7 +10,7 @@ const Navbar = () => {
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
-    <nav className="bg-foreground text-background px-6 py-4 shadow-sm sticky top-0 z-50">
+    <nav className="bg-background text-foreground px-6 py-4 shadow-sm sticky top-0 z-50">
       <div className="flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="text-lg font-bold tracking-tight hover:opacity-80 transition">
@@ -51,8 +51,8 @@ const Navbar = () => {
             <li><Link href="/contact" onClick={toggleMenu}>Contact</Link></li>
           </ul>
           <div className="flex flex-col gap-2 mt-4">
-            <Button variant="ghost">Sign In</Button>
-            <Button variant="secondary">Sign Up</Button>
+            <Button className='cursor-pointer' variant="ghost">Sign In</Button>
+            <Button className='cursor-pointer' variant="secondary">Sign Up</Button>
           </div>
         </div>
       )}
