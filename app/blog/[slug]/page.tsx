@@ -1,9 +1,6 @@
 import { getPostBySlug, getAllPosts } from "@/lib/getBlogPosts";
-import { remark } from "remark";
-import html from "remark-html";
 import remarkHtml from 'remark-html'
 import remarkParse from 'remark-parse'
-import { read } from 'to-vfile'
 import { unified } from 'unified'
 const slug = (await import("remark-slug")).default;
 import { visit } from "unist-util-visit";
@@ -43,6 +40,7 @@ export async function extractHeadings(markdown: string) {
 }
 
 export default async function BlogPostPage({ params }: Props) {
+  await params
   const { content, meta } = getPostBySlug(params.slug);
 
   const toc = await extractHeadings(content);
@@ -54,6 +52,8 @@ export default async function BlogPostPage({ params }: Props) {
     .process(content); // ✅ just the string
 
   const contentHTML = String(file);
+
+  console.log(meta)
   return (
     <section className="min-h-screen px-6 py-20 bg-gradient-to-r from-gray-900 to-black text-white">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-10">
@@ -67,7 +67,7 @@ export default async function BlogPostPage({ params }: Props) {
             dangerouslySetInnerHTML={{ __html: contentHTML }}
           />
           <p className="mt-10 font-semibold text-white">
-            Written by <span className="font-bold">{meta.author}</span>
+            <i>Written by <span className="font-bold">{meta.auther}</span></i>
           </p>
 
         </div>
@@ -93,6 +93,7 @@ export default async function BlogPostPage({ params }: Props) {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  await params
   const { meta } = getPostBySlug(params.slug);
 
   return {
