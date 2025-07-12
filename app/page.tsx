@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { features } from '@/lib/data';
 import SectionDivider from '@/components/SectionDivider';
+import RecentPosts from "@/components/sections/RecentPosts";
 import { Metadata } from 'next';
 
 export default function Home() {
@@ -49,6 +50,7 @@ export default function Home() {
         <div className='my-10'>
           <SectionDivider />
         </div>
+        <RecentPosts />
       </section>
 
     </>
